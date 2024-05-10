@@ -1,6 +1,5 @@
 // ------------ MODELS ----------------------
 const Words = require('./wordsCollection') //words Collection.
-
 // ------------ FUNCTIONS ----------------------
 const findAndUpdateWord = async (id, count) => {
     const filter = { _id: id };
@@ -12,7 +11,6 @@ const getIdCount = async (id) => {
     const word = await Words.findOne({ _id: id });
     return word ? word.count : null;
 };
-
 // ------------ EXPORTS ----------------------
 const hello = async (count) => {
     const id = '663b7179159ae8b14b7c7ce3';

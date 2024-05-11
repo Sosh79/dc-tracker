@@ -33,6 +33,7 @@ client.on('messageCreate', async (message) => {
     }
     // Specified words to audit
     const wordsToAudit = ['hello', 'hi', 'lol'];
+
     // Iterate over each specified word
     wordsToAudit.forEach(async wordToAudit => {
         // Check if the message contains the specified word
@@ -42,16 +43,16 @@ client.on('messageCreate', async (message) => {
             const matches = message.content.match(regex);
             const count = matches ? matches.length : 0; // Count the number of times
             if (wordToAudit === "hello") {
-                await Analyze.AnalyzeMessage(message);
-                await findUpdate.hello(count)
+                // await Analyze.AnalyzeMessage(message);
+                await findUpdate.hello(count, message)
             }
             else if (wordToAudit === "hi") {
-                await Analyze.AnalyzeMessage(message);
-                await findUpdate.hi(count)
+                // await Analyze.AnalyzeMessage(message);
+                await findUpdate.hi(count, message)
             }
             else if (wordToAudit === "lol") {
-                await Analyze.AnalyzeMessage(message);
-                await findUpdate.lol(count)
+                // await Analyze.AnalyzeMessage(message);
+                await findUpdate.lol(count, message)
             }
             console.log(`Number of times "${wordToAudit}" mentioned: ${count}`);
         }

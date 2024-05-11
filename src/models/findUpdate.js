@@ -1,5 +1,6 @@
 // ------------ MODELS ----------------------
 const Words = require('./wordsCollection') //words Collection.
+const Analyze = require('./AnalyzeMessage') //Analyze Message.
 // ------------ FUNCTIONS ----------------------
 const findAndUpdateWord = async (id, count) => {
     const filter = { _id: id };
@@ -12,21 +13,22 @@ const getIdCount = async (id) => {
     return word ? word.count : null;
 };
 // ------------ EXPORTS ----------------------
-const hello = async (count) => {
+const hello = async (count, message) => { //Hello Function
     const id = '663b7179159ae8b14b7c7ce3';
+    await Analyze.AnalyzeMessage(message, id); //Analyze The Message
     const currentCount = await getIdCount(id);
     if (currentCount === null) {
-        console.log('No document found for hello');
+        console.log('No Value Found For Hello Count ');
         return null;
     }
-    console.log('Current count:', currentCount); //Current count
+    console.log('Current Count:', currentCount); //Current Count
     const updatedWord = await findAndUpdateWord(id, count + currentCount);
     console.log(`Word with ID ${id} updated successfully.`);
     await updatedWord.save();
-    return updatedWord.count
 }
-const hi = async (count) => {
+const hi = async (count, message) => { //Hi Function
     const id = '663b86f380ab9af0e9bbf47c';
+    await Analyze.AnalyzeMessage(message, id); //Analyze The Message
     const currentCount = await getIdCount(id);
     if (currentCount === null) {
         console.log('No document found for hello');
@@ -36,10 +38,10 @@ const hi = async (count) => {
     const updatedWord = await findAndUpdateWord(id, count + currentCount);
     console.log(`Word with ID ${id} updated successfully.`);
     await updatedWord.save();
-    return updatedWord.count
 }
-const lol = async (count) => {
+const lol = async (count, message) => { // Lol Function
     const id = '663b86a7f955b5602e3132f3';
+    await Analyze.AnalyzeMessage(message, id); //Analyze The Message
     const currentCount = await getIdCount(id);
     if (currentCount === null) {
         console.log('No document found for hello');
@@ -49,7 +51,6 @@ const lol = async (count) => {
     const updatedWord = await findAndUpdateWord(id, count + currentCount);
     console.log(`Word with ID ${id} updated successfully.`);
     await updatedWord.save();
-    return updatedWord.count
 }
 module.exports = {
     hello: hello,

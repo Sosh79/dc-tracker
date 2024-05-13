@@ -11,9 +11,12 @@ mongoose.connect(process.env.CONNECT)
         console.log("error with connected to DB", err);
     })
 // ------------ MODELS ----------------------
-const Words = require('./models/wordsCollection') //words Collection.
 const findUpdate = require('./models/findUpdate') //findUpdate.
 const Analyze = require('./models/AnalyzeMessage') //Analyze Message.
+const Insert = require('./models/insertData') //Insert Data.
+// ------------ SCHEMAS ----------------------
+const Words = require('./schemas/WordsCollection') //Words Collection.
+const User = require('./schemas/UserCollection') //User Collection.
 
 // ------------ Discord.js ----------------------
 const client = new Client({
@@ -31,6 +34,8 @@ client.on('messageCreate', async (message) => {
     if (message.author.bot) { // 
         return;
     }
+    // await Insert.insertDocUser(message) //INSERT USER
+
     // Specified words to audit
     const wordsToAudit = ['hello', 'hi', 'lol'];
 
@@ -42,18 +47,8 @@ client.on('messageCreate', async (message) => {
             const regex = new RegExp(`\\b${wordToAudit}\\b`, 'gi');
             const matches = message.content.match(regex);
             const count = matches ? matches.length : 0; // Count the number of times
-            if (wordToAudit === "hello") {
-                // await Analyze.AnalyzeMessage(message);
-                await findUpdate.hello(count, message)
-            }
-            else if (wordToAudit === "hi") {
-                // await Analyze.AnalyzeMessage(message);
-                await findUpdate.hi(count, message)
-            }
-            else if (wordToAudit === "lol") {
-                // await Analyze.AnalyzeMessage(message);
-                await findUpdate.lol(count, message)
-            }
+            await findUpdate.word(count, message, wordToAudit)
+
             console.log(`Number of times "${wordToAudit}" mentioned: ${count}`);
         }
     });

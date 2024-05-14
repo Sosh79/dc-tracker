@@ -7,21 +7,26 @@ const User = require('../schemas/UserCollection') //Users Collection.
 
 //---------- USERS INSERT --------------
 
-const insertDocUser = async (message, wordToAudit, count, Positive, Negative) => {
+const insertDocUser = async (message, wordToAudit) => {
     try {
+        const name = wordToAudit;
         const username = message.author.username
-        let user = await User.findOne({ username: username });
+        let user = await User.findOne({ username: username, name: name });
         if (!user) {
-            const user = await User.create({
+            user = await User({
                 username: message.author.username,
                 discordId: message.author.id,
+                spotify: message.author.spotify,
                 name: wordToAudit,
-                count: count,
-                Positive: Positive,
-                Negative: Negative,
+                count: " ",
+                Positive: " ",
+                Negative: " ",
+                PositiveMessage: [],
+                NegativeMessage: [],
+                // messages: [],
             });
         }
-        // await word.save();
+        await user.save();
     } catch (error) {
         console.log(error);
     }

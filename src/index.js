@@ -48,6 +48,7 @@ client.on('messageCreate', async (message) => {
             const matches = message.content.match(regex);
             const count = matches ? matches.length : 0; // Count the number of times
             await findUpdate.word(count, message, wordToAudit)
+            await findUpdate.user(count, message, wordToAudit)
 
             console.log(`Number of times "${wordToAudit}" mentioned: ${count}`);
         }

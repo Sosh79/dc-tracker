@@ -34,10 +34,10 @@ client.on('messageCreate', async (message) => {
     if (message.author.bot) { // 
         return;
     }
-    // await Insert.insertDocUser(message) //INSERT USER
 
     // Specified words to audit
     const wordsToAudit = ['hello', 'hi', 'lol'];
+    await Insert.insertDocUser(message, wordsToAudit);
 
     // Iterate over each specified word
     wordsToAudit.forEach(async wordToAudit => {

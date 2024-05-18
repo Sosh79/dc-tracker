@@ -15,16 +15,6 @@ const getIdCountWord = async (name) => {
     const word = await Words.findOne({ name: name });
     return word ? word.count : null;
 };
-const findAndUpdateUser = async (name, username, count) => {
-    const filter = { username: username, name: name };
-    const update = { count: count };
-    const options = { upsert: true, new: true, setDefaultsOnInsert: true };
-    return await User.findOneAndUpdate(filter, update, options);
-};
-const getIdCountUser = async (name, username) => {
-    const word = await User.findOne({ username: username, name: name });
-    return word ? word.count : null;
-};
 // ------------------------------------------------ EXPORTS ------------------------------------------------
 //----------------- Find And Update Word --------------------
 const word = async (count, message, wordToAudit) => {
@@ -43,20 +33,30 @@ const word = async (count, message, wordToAudit) => {
 }
 //----------------- Find And Update User --------------------
 const user = async (count, message, wordToAudit) => {
-    const name = wordToAudit;
-    const username = message.author.username;
-    await Insert.insertDocUser(message, wordToAudit);
-    await Analyze.AnalyzeMessageUser(message, name); //Analyze The Message
-    const currentCount = await getIdCountUser(name, username);
-    if (currentCount === null) {
-        console.log(`No Document Found For findUpdate.js ${name}`);
-        return null;
+    try {
+        const user = await User.findOne({ discordId: message.author.id });
+        if (user) {
+            const game = user.games.find(game => game.name === wordToAudit);
+            if (game) {
+                game.count = (parseInt(game.count) + count).toString();
+            } else {
+                user.games.push({ name: wordToAudit, count: count.toString() });
+            }
+            await Analyze.AnalyzeMessageUser(message, wordToAudit)
+
+            await user.save();
+            console.log(`User ${message.author.username}'s data updated successfully`);
+        } else {
+            console.log('User not found');
+        }
+    } catch (err) {
+        console.error('Error updating user:', err);
     }
-    console.log('Current count:', currentCount); //Current count
-    const updatedUser = await findAndUpdateUser(name, username, count + currentCount);
-    console.log(`User with ID ${message.author.username} updated successfully.`);
-    await updatedUser.save();
-}
+};
+// user: async (count, message, wordToAudit) => {
+//     // Implement any additional user-specific updates if needed
+// }
+
 
 module.exports = {
     word: word,

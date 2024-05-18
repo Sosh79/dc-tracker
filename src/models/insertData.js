@@ -7,31 +7,30 @@ const User = require('../schemas/UserCollection') //Users Collection.
 
 //---------- USERS INSERT --------------
 
-const insertDocUser = async (message, wordToAudit) => {
+const insertDocUser = async (message, wordsToAudit) => {
     try {
-        const name = wordToAudit;
-        const username = message.author.username
-        let user = await User.findOne({ username: username, name: name });
-        if (!user) {
-            user = await User({
-                username: message.author.username,
-                discordId: message.author.id,
-                spotify: message.author.spotify,
-                name: wordToAudit,
-                count: " ",
-                Positive: " ",
-                Negative: " ",
-                PositiveMessage: [],
-                NegativeMessage: [],
-                // messages: [],
-            });
+        // Check if the user already exists in the database
+        const existingUser = await User.findOne({ discordId: message.author.id });
+
+        if (existingUser) {
+            console.log('User already exists in the database');
+            return existingUser; // Return the existing user document
         }
-        await user.save();
-    } catch (error) {
-        console.log(error);
+        const newUser = new User({
+            username: message.author.username,
+            discordId: message.author.id,
+            games: [
+                { name: wordsToAudit[0], count: "0", Positive: "0", Negative: "0", PositiveMessage: [], NegativeMessage: [] },
+                { name: wordsToAudit[1], count: "0", Positive: "0", Negative: "0", PositiveMessage: [], NegativeMessage: [] },
+                { name: wordsToAudit[2], count: "0", Positive: "0", Negative: "0", PositiveMessage: [], NegativeMessage: [] }
+            ]
+        });
+        await newUser.save();
+        console.log('User saved successfully');
+    } catch (err) {
+        console.error('Error saving user:', err);
     }
-}
-// insertDocUser();
+};
 
 
 // ---------------- WORDS INSERT ----------------

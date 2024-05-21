@@ -36,7 +36,7 @@ client.on('messageCreate', async (message) => {
     }
 
     // Specified words to audit
-    const wordsToAudit = ['hello', 'hi', 'lol'];
+    const wordsToAudit = ['GTA', 'Call of Duty', 'counter strike', ''];
     await Insert.insertDocUser(message, wordsToAudit);
 
     // Iterate over each specified word

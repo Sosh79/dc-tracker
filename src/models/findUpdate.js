@@ -40,7 +40,7 @@ const user = async (count, message, wordToAudit) => {
             if (game) {
                 game.count = (parseInt(game.count) + count).toString();
             } else {
-                user.games.push({ name: wordToAudit, count: count.toString() });
+                user.games.push({ name: wordToAudit, count: count.toString(), Positive: "0", Negative: "0", PositiveMessage: [], NegativeMessage: [] });
             }
             await Analyze.AnalyzeMessageUser(message, wordToAudit)
 

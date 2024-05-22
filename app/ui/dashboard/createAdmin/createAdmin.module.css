@@ -11,6 +11,15 @@
     justify-content: space-between;
 }
 
+.addButton {
+    padding: 10px;
+    background-color: rgb(52, 58, 65);
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
 .table {
     width: 100%;
 }
@@ -41,4 +50,12 @@
     color: var(--text);
     border: none;
     cursor: pointer;
+}
+
+.editButton {
+    background-color: teal;
+}
+
+.deleteButton {
+    background-color: crimson;
 }

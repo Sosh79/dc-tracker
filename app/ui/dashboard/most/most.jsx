@@ -12,7 +12,7 @@ const Most = async (nr) => {
                     <span className={styles.title}>{rate.name}</span>
                     <span className={styles.number}>{rate.count}</span>
                     <span className={styles.detail}>
-                        <span className={styles.positive}>20%</span> Popularity rate.
+                        Popularity.
                     </span>
                 </div>
             ))}

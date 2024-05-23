@@ -4,9 +4,13 @@ import Link from "next/link";
 import Image from "next/image";
 import Pagination from "@/app/ui/dashboard/pagination/pagination";
 import { fetchAdmins } from "@/app/lib/data";
+import { deleteAdmin } from "@/app/lib/actions";
+
+
 const CreateAdminPage = async ({ searchParams }) => {
     const q = searchParams?.q || "";
-    const admins = await fetchAdmins(q)
+    const page = searchParams?.page || 1;
+    const { admins, count } = await fetchAdmins(q, page)
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -41,19 +45,21 @@ const CreateAdminPage = async ({ searchParams }) => {
                             <td>active</td>
                             <td>
                                 <div className={styles.buttons}>
-                                    <Link href="/dashboard/createAdmin/edit">
+                                    <Link href={`/dashboard/createAdmin/${admin.id}`}>
                                         <button className={` ${styles.button} ${styles.editButton}`}>Edit</button>
                                     </Link>
-                                    <Link href="/dashboard/createAdmin/delete">
+                                    <form action={deleteAdmin}>
+                                        <input type="hidden" name="id" value={admin.id} />
                                         <button className={` ${styles.button} ${styles.deleteButton}`}>Delete</button>
-                                    </Link>
+                                    </form>
+
                                 </div>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
-            <Pagination />
+            <Pagination count={count} />
         </div>
 
     )

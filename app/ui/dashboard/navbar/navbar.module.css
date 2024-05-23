@@ -19,14 +19,14 @@
     gap: 20px;
 }
 
-.search {
+/* .search {
     display: flex;
     align-items: center;
     gap: 10px;
     background-color: rgb(33, 35, 37);
     padding: 10px;
     border-radius: 10px;
-}
+} */
 
 .input {
     background-color: transparent;

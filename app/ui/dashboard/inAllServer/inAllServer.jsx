@@ -4,8 +4,8 @@ import Pagination from "../pagination/pagination";
 import styles from "./inAllServer.module.css";
 import { fetchGames } from "@/app/lib/data";
 
-const InAllServer = async () => {
-    const games = await fetchGames();
+const InAllServer = async ({ q, page }) => {
+    const { games, count } = await fetchGames(q, page);
     return (
         <div className={styles.container}>
             <div className={styles.top}>
@@ -41,7 +41,7 @@ const InAllServer = async () => {
                     ))}
                 </tbody>
             </table>
-            <Pagination />
+            <Pagination count={count} />
         </div>
     )
 }

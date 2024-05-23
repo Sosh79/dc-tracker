@@ -56,7 +56,7 @@ const Sidebar = () => {
                     </li>
                 ))}
             </ul>
-            <Link href="/login">
+            <Link href="/">{/*/login */}
                 <button className={styles.logout}>
                     <MdLogout />
                     Logout</button>

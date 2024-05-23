@@ -2,13 +2,14 @@
 import { MdSearch } from "react-icons/md";
 import styles from "./searchbar.module.css";
 import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
 const SearchBar = ({ placeholder }) => {
     const searchParams = useSearchParams()
     const { replace } = useRouter()
     const pathname = usePathname()
-    const handleSearch = (e) => {
-
+    const handleSearch = useDebouncedCallback((e) => {
         const params = new URLSearchParams(searchParams)
+        params.set("page", "1")
         params.set("q", e.target.value)
         if (e.target.value) {
             e.target.value.length > 2 && params.set("q", e.target.value)
@@ -17,7 +18,7 @@ const SearchBar = ({ placeholder }) => {
             params.delete("q")
         }
         replace(`${pathname}?${params}`)
-    }
+    }, 400)
     return (
 
         <div className={styles.container}>

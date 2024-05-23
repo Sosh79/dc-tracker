@@ -3,7 +3,6 @@ import InAllServer from "../ui/dashboard/inAllServer/inAllServer";
 import styles from "../ui/dashboard/dashboard.module.css";
 import Rightbar from "../ui/dashboard/rightbar/rightbar";
 import Content from "../ui/dashboard/content/content";
-import { fetchGames } from "../lib/data";
 
 
 const Dashboard = async ({ searchParams }) => {

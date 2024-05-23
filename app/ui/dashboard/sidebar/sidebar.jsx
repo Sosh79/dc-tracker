@@ -1,7 +1,7 @@
 import Image from "next/image";
 import MenuLink from "./menuLink/menuLink";
 import styles from "./sidebar.module.css";
-import Link from "next/link";
+import { signOut } from "@/app/auth";
 import {
     MdDashboard,
     MdSupervisedUserCircle,
@@ -36,31 +36,27 @@ const menuItems = [
         ],
     },
 ];
-const Sidebar = () => {
+const Sidebar = async () => {
     return (
         <div className={styles.container}>
-            <div className={styles.user}>
-                <Image src="/noavatar.png" alt="" width="50" height="50" />
-                <div className={styles.userDetail}>
-                    <span className={styles.username}>saad shekhani</span>
-                    <span className={styles.userTitle}>Administrator</span>
-                </div>
-            </div>
             <ul className={styles.list}>
-                {menuItems.map((cat) => (
-                    <li key={cat.title}>
-                        <span className={styles.cat}>{cat.title}</span>
-                        {cat.list.map((item) => (
+                {menuItems.map((sid) => (
+                    <li key={sid.title}>
+                        <span className={styles.cat}>{sid.title}</span>
+                        {sid.list.map((item) => (
                             <MenuLink item={item} key={item.title} />
                         ))}
                     </li>
                 ))}
             </ul>
-            <Link href="/">{/*/login */}
+            <form action={async () => {
+                "use server"
+                await signOut()
+            }}>
                 <button className={styles.logout}>
                     <MdLogout />
                     Logout</button>
-            </Link>
+            </form>
         </div>
     )
 }

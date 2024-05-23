@@ -4,6 +4,8 @@ import { dbConnect } from "./dbConnect";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
+import { signIn } from "../auth";
+
 
 
 export const addAdmin = async (formData) => {
@@ -63,3 +65,15 @@ export const deleteAdmin = async (formData) => {
     revalidatePath("/dashboard/createAdmin");
 
 }
+export const authenticate = async (prevState, formData) => {
+    const { username, password } = Object.fromEntries(formData);
+
+    try {
+        await signIn("credentials", { username, password });
+    } catch (err) {
+        if (err.message.includes("CredentialsSignin")) {
+            return "Incorrect username or password";
+        }
+        throw err;
+    }
+};

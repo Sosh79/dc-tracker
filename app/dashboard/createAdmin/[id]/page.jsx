@@ -22,7 +22,7 @@ const SingleAdmin = async ({ params }) => {
                     <label> Email</label>
                     <input type="email" placeholder={admin.email} name="email" />
                     <label> Password</label>
-                    <input type="password" placeholder={admin.password} name="password" />
+                    <input type="password" placeholder="New Password" name="password" />
                     <button>Update</button>
                 </form>
             </div>

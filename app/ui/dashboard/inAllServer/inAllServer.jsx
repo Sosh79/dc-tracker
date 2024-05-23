@@ -26,7 +26,7 @@ const InAllServer = async ({ q, page }) => {
                     {games.map((game) => (
                         <tr key={game.id}>
                             <td><div className={styles.user}>
-                                <Image src="/noavatar.png" alt="avatar"
+                                <Image src="/games.jpg" alt="avatar"
                                     width={40}
                                     height={40}
                                     className={styles.avatar}

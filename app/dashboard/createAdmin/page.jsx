@@ -32,7 +32,7 @@ const CreateAdminPage = async ({ searchParams }) => {
                     {admins.map((admin) => (
                         <tr key={admin.id}>
                             <td><div className={styles.user}>
-                                <Image src={admin.img || "/noavatar.png"} alt="avatar"
+                                <Image src={admin.img || "/admin.jpg"} alt="avatar"
                                     width={40}
                                     height={40}
                                     className={styles.avatar}

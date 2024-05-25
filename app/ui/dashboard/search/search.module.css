@@ -1,38 +1,59 @@
 .container {
-    display: flex;
-}
-
-.menu {
-    flex: 1;
     background-color: var(--bgSoft);
     padding: 20px;
-    min-height: 100vh;
-}
-
-.content {
-    flex: 4;
-    padding: 20px;
-}
-
-.wrapper {
-    display: flex;
-    gap: 20px;
+    border-radius: 10px;
     margin-top: 20px;
 }
 
-.main {
-    flex: 3;
+.form {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    flex-wrap: wrap;
+    column-gap: 50px;
+    justify-content: center;
 }
 
-.most {
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
+.form input {
+    padding: 30px;
+    background-color: var(--bg);
+    color: var(--text);
+    border: 2px solid #2e374a;
+    border-radius: 5px;
+    margin-bottom: 30px;
+    width: 30%;
 }
 
-.side {
-    flex: 1;
+.form button {
+    width: 100%;
+    padding: 30px;
+    background-color: rgb(21, 85, 85);
+    color: var(--text);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.table {
+    width: 100%;
+}
+
+.table td {
+    padding: 10px;
+}
+
+.ss {
+    width: 100%;
+    margin-top: 20px;
+}
+
+.ss td {
+    padding: 10px;
+}
+
+.positiveContainer,
+.negativeContainer {
+    overflow-wrap: break-word;
+    margin-top: 16px;
+    width: 400px;
+    /* line-height: 2.5; */
+    /* Adjust line height as needed */
 }

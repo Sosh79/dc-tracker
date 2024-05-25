@@ -5,6 +5,8 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import bcrypt from "bcrypt";
 import { signIn } from "../auth";
+import { User } from "./models";
+
 
 
 
@@ -75,5 +77,43 @@ export const authenticate = async (prevState, formData) => {
             return "Incorrect username or password";
         }
         throw err;
+    }
+};
+export const fetchUserSearch = async (formData) => {
+
+    const { username, gamesname } = formData || {};
+    const regex = new RegExp(gamesname, "i");
+
+    if (!username || !gamesname) {
+        throw new Error("Username and gamesname are required");
+    }
+    try {
+        await dbConnect();
+        const user = await User.findOne({ username: username });
+
+        if (!user) {
+            throw new Error("User not found");
+        }
+
+        const game = user.games.find(game => game.name === gamesname || game.name.match(regex));
+
+        if (!game) {
+            throw new Error("Game not found for the user");
+        }
+
+        const results = [
+            {
+                name: game.name,
+                count: game.count,
+                Positive: game.Positive,
+                Negative: game.Negative,
+                PositiveMessage: game.PositiveMessage,
+                NegativeMessage: game.NegativeMessage,
+            }
+        ];
+        return results;
+    } catch (error) {
+        console.error('Error fetching user search:', error);
+        throw new Error("Failed to fetch Search");
     }
 };

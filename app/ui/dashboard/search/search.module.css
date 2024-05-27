@@ -57,3 +57,8 @@
     /* line-height: 2.5; */
     /* Adjust line height as needed */
 }
+
+.positiveContainer>*:not(:last-child),
+.negativeContainer>*:not(:last-child) {
+    margin: 0 0 15px;
+}

@@ -1,15 +1,10 @@
-const natural = require('natural');
-const tokenizer = new natural.WordTokenizer();
-const Analyzer = natural.SentimentAnalyzer;
-const stemmer = natural.PorterStemmer;
-// Create a new instance of SentimentAnalyzer
-const analyzer = new Analyzer('English', stemmer, 'afinn');
-//------------------------------ MODELS ----------------------------------
-const Insert = require('./insertData') //Insert Data.
+const dotEnv = require('dotenv');
+dotEnv.config();
+const { GoogleGenerativeAI } = require("@google/generative-ai");
+const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 // //------------------------------ SCHEMAS ----------------------------------
-const Words = require('../schemas/WordsCollection') //Words Collection.
+const Words = require('../schemas/GamesCollection') //Words Collection.
 const User = require('../schemas/UserCollection') //Users Collection.
-
 //------------------------------ FUNCTIONS ----------------------------------
 
 //--------------- Find And Update Word ---------------
@@ -35,65 +30,75 @@ const getIdValueUser = async (discordId, gameName) => {
     return await User.findOne({ discordId: discordId, "games.name": gameName });
 };
 //------------------------------Analyze Message ----------------------------------
-// Define custom thresholds for sentiment categories
-const THRESHOLDS = {
-    significantlyPositive: 1.0,
-    significantlyNegative: -1.0,
-};
-// Function to analyze the sentiment of a message
-const analyzeSentiment = (message) => {
-    const tokens = tokenizer.tokenize(message);
-    const score = analyzer.getSentiment(tokens);
-    if (score >= THRESHOLDS.significantlyPositive) {
-        return 'significantly positive';
-    } else if (score <= THRESHOLDS.significantlyNegative) {
-        return 'significantly negative';
-    } else {
-        return 'neutral';
-    }
-};
+async function run(message) {
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
+    const chat = model.startChat({
+        history: [
+            {
+                role: "user",
+                parts: [{ text: "Hello AI." }, { text: "If the message is positive, write positive. If the message is negative, write negative. If the message is not positive or negative, do not write anything." }],
+            },
+        ],
+        generationConfig: {
+            maxOutputTokens: 100,
+        },
+    });
+    const msg = message.content;
+    const result = await chat.sendMessage(msg);
+    const response = await result.response;
+    const text = response.text();
+    return text;
+
+}
 // Analyze the sentiment and categorize the message
 const AnalyzeMessageWord = async (message, name) => {
+    const text = await run(message);
+    const textResult = text.trim()
+    // console.log(textResult);
     let updateValue = null;
-    const sentimentCategory = analyzeSentiment(message.content);
-    if (sentimentCategory === 'significantly positive') {
+
+    if (textResult === "positive") {
         updateValue = { $inc: { Positive: 1 } };
-        console.log('Significantly positive message:', message.content);
-    } else if (sentimentCategory === 'significantly negative') {
+        console.log('Positive message');
+    } else if (textResult === "negative") {
         updateValue = { $inc: { Negative: 1 } };;
-        console.log('Significantly negative message:', message.content);
+        console.log('Negative message');
+
     } else {
-        console.log('Neutral message:', message.content);
+        console.log('Neutral message');
     }
     if (updateValue) {
+
         const currentWord = await getIdValueWord(name);
         if (currentWord === null) {
             console.log(`No Value Found For ${name}`);
             return;
         }
-        console.log(`Current ${name}:`, currentWord.Positive || currentWord.Negative);
+        console.log(`Current ${name}:`, "Positive", currentWord.Positive, "Negative", currentWord.Negative);
         const updatedWord = await findAndUpdateWord(name, updateValue);
         const Positive = updatedWord.Positive
         const Negative = updatedWord.Negative
         console.log(`Updated ${name}:`, Positive || Negative);
     }
-}; // ----------------- Analyze Message User -------------------
+};
+// ----------------- Analyze Message User -------------------
 const AnalyzeMessageUser = async (message, gameName) => {
+    const text = await run(message);
+    const textResult = text.trim()
     const discordId = message.author.id;
-    const sentimentCategory = analyzeSentiment(message.content);
     let updateValue = null;
     let updateMessageValue = null;
-    if (sentimentCategory === 'significantly positive') {
+    if (textResult === "positive") {
         updateValue = { $inc: { "games.$.Positive": 1 } };
         updateMessageValue = { $push: { "games.$.PositiveMessage": message.content } };
-        console.log('Significantly positive message:', message.content);
-    } else if (sentimentCategory === 'significantly negative') {
+        console.log('positive message');
+    } else if (textResult === "negative") {
         updateValue = { $inc: { "games.$.Negative": 1 } };
         updateMessageValue = { $push: { "games.$.NegativeMessage": message.content } };
-        console.log('Significantly negative message:', message.content);
+        console.log('negative message');
     } else {
-        console.log('Neutral message:', message.content);
+        console.log('Neutral message');
     }
     if (updateValue) {
         const currentUser = await getIdValueUser(discordId, gameName);
@@ -101,14 +106,10 @@ const AnalyzeMessageUser = async (message, gameName) => {
             console.log(`No Value Found For User ${message.author.username} in game ${gameName}`);
             return;
         }
-
-        console.log(`Current ${gameName}: Positive: ${currentUser.games.find(game => game.name === gameName).Positive}, Negative: ${currentUser.games.find(game => game.name === gameName).Negative}`);
         const updatedUser = await findAndUpdateUser(discordId, gameName, updateValue);
-        console.log(`Updated ${gameName}: Positive: ${updatedUser.games.find(game => game.name === gameName).Positive}, Negative: ${updatedUser.games.find(game => game.name === gameName).Negative}`);
 
         if (updateMessageValue) {
             const updatedMessageUser = await findAndUpdateUser(discordId, gameName, updateMessageValue);
-            console.log(`Updated ${gameName}: PositiveMessage: ${updatedMessageUser.games.find(game => game.name === gameName).PositiveMessage}, NegativeMessage: ${updatedMessageUser.games.find(game => game.name === gameName).NegativeMessage}`);
         }
     }
 };

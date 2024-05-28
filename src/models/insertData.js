@@ -1,48 +1,40 @@
-const Words = require('../schemas/WordsCollection') //Words Collection.
+const GamesWords = require('../schemas/GamesCollection') //GamesWords Collection.
 const User = require('../schemas/UserCollection') //Users Collection.
 
 // --------------------------------- Insert All Data --------------------------------------------
-
-
-
 //---------- USERS INSERT --------------
 
 const insertDocUser = async (message, wordsToAudit) => {
     try {
-        // Check if the user already exists in the database
+
         const existingUser = await User.findOne({ discordId: message.author.id });
 
         if (existingUser) {
             console.log('User already exists in the database');
-            return existingUser; // Return the existing user document
+            return;
         }
         const newUser = new User({
             username: message.author.username,
             discordId: message.author.id,
-            games: [
-                { name: wordsToAudit[0], count: "0", Positive: "0", Negative: "0", PositiveMessage: [], NegativeMessage: [] },
-                { name: wordsToAudit[1], count: "0", Positive: "0", Negative: "0", PositiveMessage: [], NegativeMessage: [] },
-                { name: wordsToAudit[2], count: "0", Positive: "0", Negative: "0", PositiveMessage: [], NegativeMessage: [] }
-            ]
+            avatar: message.author.avatarURL(),
+            games: []
         });
-        await newUser.save();
         console.log('User saved successfully');
+        await newUser.save();
     } catch (err) {
         console.error('Error saving user:', err);
     }
 };
 
 
-// ---------------- WORDS INSERT ----------------
-const insertDocWord = async (wordToAudit) => {
+// ---------------- GamesName INSERT ----------------
+const insertDocWord = async (GameName) => {
     try {
-        const name = wordToAudit;
-        // Searches for the document using the given ID
-        let word = await Words.findOne({ name: name });
-        // If the document is not found, a new document is created
+        const name = GameName;
+        let word = await GamesWords.findOne({ name: name });
         if (!word) {
-            word = new Words({
-                name: wordToAudit,
+            word = new GamesWords({
+                name: GameName,
                 count: " ",
                 Positive: " ",
                 Negative: " ",
@@ -53,7 +45,6 @@ const insertDocWord = async (wordToAudit) => {
         console.log(error);
     }
 };
-// insertDocLol();
 module.exports = {
     insertDocUser: insertDocUser,
     insertDocWord: insertDocWord

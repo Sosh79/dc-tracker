@@ -7,9 +7,6 @@ import bcrypt from "bcrypt";
 import { signIn } from "../auth";
 import { User } from "./models";
 
-
-
-
 export const addAdmin = async (formData) => {
     const { username, password, email } = Object.fromEntries(formData)
     try {

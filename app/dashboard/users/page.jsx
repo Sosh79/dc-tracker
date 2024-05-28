@@ -25,8 +25,9 @@ const UsersPage = async ({ searchParams }) => {
                 <tbody>
                     {users.map((user) => (
                         <tr key={user.id}>
+
                             <td><div className={styles.user}>
-                                <Image src={user.img || "/noavatar.png"} alt="avatar"
+                                <Image src={user.avatar || "/noavatar.png"} alt="avatar"
                                     width={40}
                                     height={40}
                                     className={styles.avatar}

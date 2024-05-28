@@ -28,7 +28,7 @@
     padding: 10px;
 }
 
-.user {
+.admin {
     display: flex;
     align-items: center;
     gap: 10px;

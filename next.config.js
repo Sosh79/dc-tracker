@@ -4,7 +4,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: "https",
-                hostname: "t3.ftcdn.net",
+                hostname: "cdn.discordapp.com",
             },
         ],
     },

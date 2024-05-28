@@ -26,13 +26,13 @@ const adminSchema = new mongoose.Schema({
     timestamps: true,
 }
 )
-const gameWord = mongoose.Schema({
+const gameWord = new mongoose.Schema({
     name: String,
     count: Number,
     Positive: Number,
     Negative: Number,
 })
-const GameSchema = mongoose.Schema({
+const GameSchema = new mongoose.Schema({
     name: String,
     count: Number,
     Positive: Number,
@@ -41,11 +41,15 @@ const GameSchema = mongoose.Schema({
     NegativeMessage: [String]
 });
 
-const UserSchema = mongoose.Schema({
+const UserSchema = new mongoose.Schema({
     username: String,
     discordId: String,
+    avatar: String,
     games: [GameSchema]
-});
+}, {
+    timestamps: true,
+}
+);
 
 export const User = mongoose.models.User || mongoose.model('User', UserSchema);
 export const Games = mongoose.models.Games || mongoose.model('Games', gameWord)

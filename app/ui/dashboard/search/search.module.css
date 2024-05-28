@@ -40,22 +40,12 @@
     padding: 10px;
 }
 
-.ss {
-    width: 100%;
-    margin-top: 20px;
-}
-
-.ss td {
-    padding: 10px;
-}
 
 .positiveContainer,
 .negativeContainer {
     overflow-wrap: break-word;
     margin-top: 16px;
     width: 400px;
-    /* line-height: 2.5; */
-    /* Adjust line height as needed */
 }
 
 .positiveContainer>*:not(:last-child),

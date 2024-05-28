@@ -66,7 +66,7 @@ const Search = () => {
                     ))}
                 </tbody>
             </table>
-            <table className={styles.ss}>
+            <table className={styles.table}>
                 <thead>
                     <tr>
                         <td>PositiveMessage</td>
@@ -76,7 +76,8 @@ const Search = () => {
                 <tbody>
                     {games.map((game) => (
                         <tr key={game.id}>
-                            <td>
+                            {/* <div className={styles.positiveFix}> */}
+                            <td >
                                 <ol className={styles.positiveContainer}>
                                     {game.PositiveMessage.map((message, index) => {
                                         return (
@@ -88,20 +89,23 @@ const Search = () => {
                                     })}
                                 </ol>
                             </td>
-                            <td>
-                                <div className={styles.negativeContainer}>
-                                    {game.NegativeMessage.map((message, index) => {
-                                        return (
+                            {/* </div> */}
+                            <div className={styles.negativeFix}>
+                                <td >
+                                    <ol className={styles.negativeContainer}>
+                                        {game.NegativeMessage.map((message, index) => {
+                                            return (
 
-                                            <div key={index} className={styles.message}>
+                                                <li key={index} className={styles.message}>
 
-                                                {renderMessages(message)}
+                                                    {renderMessages(message)}
 
-                                            </div>
-                                        );
-                                    })}
-                                </div>
-                            </td>
+                                                </li>
+                                            );
+                                        })}
+                                    </ol>
+                                </td>
+                            </div>
                         </tr>
                     ))}
                 </tbody>

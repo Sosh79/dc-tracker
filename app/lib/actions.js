@@ -1,5 +1,5 @@
 "use server"
-import { Admin } from "./models";
+import { Admin, Words } from "./models";
 import { dbConnect } from "./dbConnect";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -114,3 +114,54 @@ export const fetchUserSearch = async (formData) => {
         throw new Error("Failed to fetch Search");
     }
 };
+
+
+
+export const addWord = async (formData) => {
+    const { name } = Object.fromEntries(formData)
+    try {
+        await dbConnect()
+        const newWord = new Words({
+            name,
+        });
+        await newWord.save();
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to add Word");
+    }
+    revalidatePath("/dashboard/createWord");
+    redirect("/dashboard/createWord")
+
+}
+export const editWord = async (formData) => {
+    const { id, name } = Object.fromEntries(formData)
+    try {
+        await dbConnect()
+        const updatedWord = {
+            name,
+        }
+        Object.keys(updatedWord).forEach((key) =>
+            (updatedWord[key] === "" || undefined) && delete updatedWord[key]);
+
+        await Words.findByIdAndUpdate(id, updatedWord);
+
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to Edit Word");
+    }
+    revalidatePath("/dashboard/createWord");
+    redirect("/dashboard/createWord")
+
+}
+export const deleteWord = async (formData) => {
+    const { id } = Object.fromEntries(formData)
+    try {
+        await dbConnect()
+        await Words.findByIdAndDelete(id);
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to delete Word");
+    }
+    revalidatePath("/dashboard/createWord");
+
+}

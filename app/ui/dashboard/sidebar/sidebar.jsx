@@ -1,6 +1,7 @@
 import MenuLink from "./menuLink/menuLink";
 import styles from "./sidebar.module.css";
 import { signOut } from "@/app/auth";
+import { TfiClipboard } from "react-icons/tfi";
 import {
     MdDashboard,
     MdSupervisedUserCircle,
@@ -31,6 +32,11 @@ const menuItems = [
                 title: "CreateAdmin",
                 path: "/dashboard/createAdmin",
                 icon: <MdAdminPanelSettings />,
+            },
+            {
+                title: "CreateWord",
+                path: "/dashboard/createWord",
+                icon: <TfiClipboard />,
             },
         ],
     },

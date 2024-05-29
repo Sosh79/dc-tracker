@@ -26,7 +26,7 @@ const adminSchema = new mongoose.Schema({
     timestamps: true,
 }
 )
-const gameWord = new mongoose.Schema({
+const WordSchema = new mongoose.Schema({
     name: String,
     count: Number,
     Positive: Number,
@@ -50,7 +50,18 @@ const UserSchema = new mongoose.Schema({
     timestamps: true,
 }
 );
+const WordNameSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+}, {
+    timestamps: true,
+}
+)
 
 export const User = mongoose.models.User || mongoose.model('User', UserSchema);
-export const Games = mongoose.models.Games || mongoose.model('Games', gameWord)
+export const Games = mongoose.models.Games || mongoose.model('Games', WordSchema)
 export const Admin = mongoose.models.Admins || mongoose.model("Admins", adminSchema);
+export const Words = mongoose.models.Words || mongoose.model("Words", WordNameSchema);

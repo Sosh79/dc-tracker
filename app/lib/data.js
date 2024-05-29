@@ -1,4 +1,4 @@
-import { Admin, Games, User } from "./models";
+import { Admin, Games, User, Words } from "./models";
 import { dbConnect } from "./dbConnect";
 
 export const fetchAdmins = async (q, page) => {
@@ -58,4 +58,28 @@ export const fetchUser = async (q, page) => {
     } catch (error) {
         console.log(error);
     } throw new Error("Failed to fetch User")
+}
+
+export const fetchWord = async (q, page) => {
+    const regex = new RegExp(q, "i");
+    const ITEM_PER_PAGE = 5;
+    try {
+        await dbConnect()
+        const count = await Words.find({ name: { $regex: regex } }).count();
+        const words = await Words.find({ name: { $regex: regex } }).limit(ITEM_PER_PAGE).skip(ITEM_PER_PAGE * (page - 1));
+        return { words, count };
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to fetch Word");
+    }
+}
+export const fetchEditWord = async (id) => {
+    try {
+        await dbConnect()
+        const word = await Words.findById(id);
+        return word
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to fetch Edit Word");
+    }
 }

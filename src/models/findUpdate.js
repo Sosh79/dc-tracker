@@ -1,6 +1,6 @@
 //------------------------------ SCHEMAS ----------------------------------
-const User = require('../schemas/UserCollection')
-const GamesWords = require('../schemas/GamesCollection')
+const { Games, User } = require('../schemas')
+
 // ------------ MODELS ----------------------
 const Analyze = require('./AnalyzeMessage')
 const Insert = require('./insertData')
@@ -9,10 +9,10 @@ const findAndUpdateWord = async (name, count) => {
     const filter = { name: name };
     const update = { count: count };
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
-    return await GamesWords.findOneAndUpdate(filter, update, options);
+    return await Games.findOneAndUpdate(filter, update, options);
 };
 const getIdCountWord = async (name) => {
-    const word = await GamesWords.findOne({ name: name });
+    const word = await Games.findOne({ name: name });
     return word ? word.count : null;
 };
 // ------------------------------------------------ EXPORTS ------------------------------------------------
@@ -20,7 +20,7 @@ const getIdCountWord = async (name) => {
 const word = async (count, message, GameName) => {
     const name = GameName;
     await Insert.insertDocWord(GameName);
-    await Analyze.AnalyzeMessageWord(message, name);
+    // await Analyze.AnalyzeMessageWord(message, name);
     const currentCount = await getIdCountWord(name);
     if (currentCount === null) {
         console.log(`No Document Found For ${name}`);
@@ -43,7 +43,7 @@ const user = async (count, message, GameName) => {
                 user.games.push({ name: GameName, count: count.toString(), Positive: "0", Negative: "0", PositiveMessage: [], NegativeMessage: [] });
             }
             await user.save();
-            await Analyze.AnalyzeMessageUser(message, GameName)
+            // await Analyze.AnalyzeMessageUser(message, GameName)
             console.log(`User ${message.author.username}'s data updated successfully`);
         } else {
             console.log('User not found');

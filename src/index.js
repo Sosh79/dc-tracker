@@ -1,11 +1,14 @@
 const dotEnv = require('dotenv')
 dotEnv.config()
 const { Client, IntentsBitField } = require('discord.js')
-const connectDB = require('./connectDB')
+const connectDB = require('./connectDB.js')
 connectDB()
+const { Words } = require('./schemas.js')
+const { fetchWord } = require('./data.js')
+
 // ------------ MODELS ----------------------
-const findUpdate = require('./models/findUpdate')
-const Insert = require('./models/insertData')
+const findUpdate = require('./models/findUpdate.js')
+const Insert = require('./models/insertData.js')
 // ------------ Discord.js ---------------------
 const client = new Client({
     intents: [ // It is a set of permissions that a robot can use
@@ -22,8 +25,15 @@ client.on('messageCreate', async (message) => {
     if (message.author.bot) { // 
         return;
     }
+
+
+    const GamesName = await fetchWord();
+
+
+
+
     // Specified words to audit
-    const GamesName = ['GTA', 'Call of Duty', 'counter strike', 'Rust', "Minecraft", "FIFA", "BF"];
+    // const GamesName = ['GTA', 'Call of Duty', 'counter strike', 'Rust', "Minecraft", "FIFA", "BF"];
     await Insert.insertDocUser(message, GamesName);
 
     // Iterate over each specified word

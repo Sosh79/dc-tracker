@@ -3,8 +3,7 @@ dotEnv.config();
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 // //------------------------------ SCHEMAS ----------------------------------
-const Words = require('../schemas/GamesCollection') //Words Collection.
-const User = require('../schemas/UserCollection') //Users Collection.
+const { Games, User } = require('../schemas')
 //------------------------------ FUNCTIONS ----------------------------------
 
 //--------------- Find And Update Word ---------------
@@ -12,10 +11,10 @@ const findAndUpdateWord = async (name, value) => {
     const filter = { name: name };
     const update = value;
     const options = { upsert: true, new: true, setDefaultsOnInsert: true };
-    return await Words.findOneAndUpdate(filter, update, options);
+    return await Games.findOneAndUpdate(filter, update, options);
 };
 const getIdValueWord = async (name) => {
-    const word = await Words.findOne({ name: name });
+    const word = await Games.findOne({ name: name });
     return word ? word : null;
 };
 //--------------- Find And Update User ---------------

@@ -1,5 +1,5 @@
-const GamesWords = require('../schemas/GamesCollection') //GamesWords Collection.
-const User = require('../schemas/UserCollection') //Users Collection.
+const { Games, User } = require('../schemas')
+
 
 // --------------------------------- Insert All Data --------------------------------------------
 //---------- USERS INSERT --------------
@@ -31,9 +31,9 @@ const insertDocUser = async (message, wordsToAudit) => {
 const insertDocWord = async (GameName) => {
     try {
         const name = GameName;
-        let word = await GamesWords.findOne({ name: name });
+        let word = await Games.findOne({ name: name });
         if (!word) {
-            word = new GamesWords({
+            word = new Games({
                 name: GameName,
                 count: " ",
                 Positive: " ",

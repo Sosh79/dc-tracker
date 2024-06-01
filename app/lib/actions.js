@@ -7,10 +7,31 @@ import bcrypt from "bcrypt";
 import { signIn } from "../auth";
 import { User } from "./models";
 
-export const addAdmin = async (formData) => {
-    const { username, password, email } = Object.fromEntries(formData)
+export const checkUsernameAndEmail = async (username, email) => {
     try {
-        await dbConnect()
+        await dbConnect();
+        const existingAdminUsername = await Admin.findOne({ username });
+        const existingAdminEmail = await Admin.findOne({ email });
+
+        if (existingAdminUsername) {
+            return { message: "This username is already taken" };
+        }
+
+        if (existingAdminEmail) {
+            return { message: "This email is already registered" };
+        }
+
+        return { message: "Both username and email are available" };
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to check username and email");
+    }
+};
+
+export const addAdmin = async (formData) => {
+    const { username, password, email } = Object.fromEntries(formData);
+    try {
+        await dbConnect();
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -25,9 +46,8 @@ export const addAdmin = async (formData) => {
         throw new Error("Failed to add Admin");
     }
     revalidatePath("/dashboard/createAdmin");
-    redirect("/dashboard/createAdmin")
-
-}
+    redirect("/dashboard/createAdmin");
+};
 export const editAdmin = async (formData) => {
     const { id, username, password, email } = Object.fromEntries(formData)
     try {
@@ -111,27 +131,32 @@ export const fetchUserSearch = async (formData) => {
         return results;
     } catch (error) {
         console.error('Error fetching user search:', error);
-        throw new Error("Failed to fetch Search");
+        throw new Error("Username or game name not found");
     }
 };
 
 
 
 export const addWord = async (formData) => {
-    const { name } = Object.fromEntries(formData)
+    const { name } = Object.fromEntries(formData);
     try {
-        await dbConnect()
-        const newWord = new Words({
-            name,
-        });
+        await dbConnect();
+
+        // Check if the word already exists
+        const existingWord = await Words.findOne({ name });
+        if (existingWord) {
+            return { message: "This name already exists in the database" };
+        }
+
+        // Add the new word
+        const newWord = new Words({ name });
         await newWord.save();
     } catch (error) {
         console.log(error);
         throw new Error("Failed to add Word");
     }
     revalidatePath("/dashboard/createWord");
-    redirect("/dashboard/createWord")
-
+    redirect("/dashboard/createWord");
 }
 export const editWord = async (formData) => {
     const { id, name } = Object.fromEntries(formData)

@@ -15,7 +15,6 @@ const AddWord = () => {
         if (response && response.message) {
             setMessage(response.message);
         } else {
-            // handle successful word addition, like redirecting or clearing the form
             setMessage("Word added successfully!");
         }
     };

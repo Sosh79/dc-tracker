@@ -52,3 +52,11 @@
 .negativeContainer>*:not(:last-child) {
     margin: 0 0 15px;
 }
+
+.error {
+    padding: 15px 10px;
+    color: rgb(75, 11, 11);
+    background-color: #ff000047;
+    border-radius: 10px;
+    margin: 15px 0;
+}

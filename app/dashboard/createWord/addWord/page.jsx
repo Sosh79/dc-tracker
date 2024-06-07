@@ -25,7 +25,7 @@ const AddWord = () => {
                 <input type="text" placeholder="name" name="name" required />
                 <button type="submit">Submit</button>
             </form>
-            {message && <p>{message}</p>}
+            {message && <p className={styles.error}>{message}</p>}
         </div>
     )
 }

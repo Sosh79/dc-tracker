@@ -36,7 +36,7 @@ const AddAdmin = () => {
                 <input type="password" placeholder="password" name="password" required />
                 <button type="submit">Submit</button>
             </form>
-            {message && <p>{message}</p>}
+            {message && <p className={styles.error}>{message}</p>}
         </div>
     );
 };

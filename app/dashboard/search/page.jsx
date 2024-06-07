@@ -23,7 +23,8 @@ const Search = () => {
             setGames(results);
         } catch (error) {
             console.error('Error fetching search results:', error);
-            setError("Username or game name not found");
+            setGames([]);
+            setError("username or game name not found");
         }
     };
     const renderMessages = (messages) => {

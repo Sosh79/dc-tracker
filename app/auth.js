@@ -10,19 +10,18 @@ const login = async (credentials) => {
         dbConnect();
         const admin = await Admin.findOne({ username: credentials.username });
 
-        if (!admin) throw new Error("Wrong credentials!");
-
         const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
             admin.password
         );
 
-        if (!isPasswordCorrect) throw new Error("Wrong credentials!");
+        if (!isPasswordCorrect) {
+            console.log("Incorrect password!");
+        }
 
         return admin;
     } catch (err) {
-        console.log(err);
-        throw new Error("Failed to login!");
+        console.log("Failed to login!");
     }
 };
 

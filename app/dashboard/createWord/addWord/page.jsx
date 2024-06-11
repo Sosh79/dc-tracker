@@ -14,8 +14,6 @@ const AddWord = () => {
 
         if (response && response.message) {
             setMessage(response.message);
-        } else {
-            setMessage("Word added successfully!");
         }
     };
 

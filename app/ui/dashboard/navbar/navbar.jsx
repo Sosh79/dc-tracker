@@ -2,10 +2,11 @@
 import { usePathname } from "next/navigation";
 import styles from "./navbar.module.css";
 import GoogleTranslate from "@/app/lib/googleTranslate";
+import Link from "next/link"; // Import Link component
+
 import {
     // MdNotifications,
-    // MdOutlineChat,
-    // MdPublic,
+    MdOutlineChat,
     // MdSearch,
 } from "react-icons/md";
 const Navbar = () => {
@@ -15,10 +16,10 @@ const Navbar = () => {
             <div className={styles.title}>{pathname.split("/").pop()}</div>
             <div className={styles.menu}>
                 <div className={styles.icons}>
-                    {/* <MdOutlineChat size={20} /> */}
+                    <Link href="/dashboard/discordChat">
+                        <MdOutlineChat size={20} />
+                    </Link>
                     <GoogleTranslate />
-                    {/* <MdNotifications size={20} /> */}
-                    {/* <MdPublic size={20} /> */}
                 </div>
             </div>
         </div>

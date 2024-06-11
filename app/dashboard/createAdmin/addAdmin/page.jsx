@@ -19,8 +19,6 @@ const AddAdmin = () => {
             const response = await addAdmin(formData);
             if (response && response.message) {
                 setMessage(response.message);
-            } else {
-                setMessage("Admin added successfully!");
             }
         } else if (checkResult && checkResult.message) {
             // Either username or email is already taken

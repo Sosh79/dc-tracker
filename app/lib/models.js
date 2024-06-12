@@ -22,6 +22,12 @@ const adminSchema = new mongoose.Schema({
     img: {
         type: String
     },
+    guildId: {
+        type: String
+    },
+    channelId: {
+        type: String
+    },
 }, {
     timestamps: true,
 }
@@ -59,9 +65,28 @@ const WordNameSchema = new mongoose.Schema({
 }, {
     timestamps: true,
 }
-)
+);
+const ServerNameSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
+    guildId: {
+        type: String,
+        required: true,
+        unique: true,
+    },
+    channelId: {
+        type: String,
+        required: true,
+    },
+}, {
+    timestamps: true,
+}
+);
 
 export const User = mongoose.models.User || mongoose.model('User', UserSchema);
 export const Games = mongoose.models.Games || mongoose.model('Games', WordSchema)
 export const Admin = mongoose.models.Admins || mongoose.model("Admins", adminSchema);
 export const Words = mongoose.models.Words || mongoose.model("Words", WordNameSchema);
+export const Server = mongoose.models.Server || mongoose.model('Server', ServerNameSchema);

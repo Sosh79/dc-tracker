@@ -1,9 +1,26 @@
 "use server"
 const dotEnv = require("dotenv");
 dotEnv.config();
+import { Server } from "./models";
+import { dbConnect } from "./dbConnect";
 export const addMessage = async (formData) => {
-    const { message } = Object.fromEntries(formData);
+    const { id, message, guildId, channelId } = Object.fromEntries(formData);
     try {
+        try {
+            await dbConnect()
+            const updatedWord = {
+                guildId,
+                channelId,
+            }
+            Object.keys(updatedWord).forEach((key) =>
+                (updatedWord[key] === "" || undefined) && delete updatedWord[key]);
+
+            await Server.findByIdAndUpdate(id, updatedWord);
+
+        } catch (error) {
+            console.log(error);
+            throw new Error("Failed to Chat");
+        }
 
 
         const { Client, GatewayIntentBits } = require("discord.js");
@@ -16,9 +33,9 @@ export const addMessage = async (formData) => {
         });
         client.on("ready", async (ready) => {
             console.log(`✅ .${ready.user.tag} is online`); // bot is online or offline
-            const guildId = '1237029023654215751';
-            const specificChannelId = '1247867293199896628';
-            await sendMessageToChannels(guildId, specificChannelId, message);
+            // const guildId = '1237029023654215751';
+            // const specificChannelId = '1247867293199896628';
+            await sendMessageToChannels(guildId, channelId, message);
         });
 
         client.login(process.env.TOKEN_GHAT);
@@ -44,6 +61,4 @@ export const addMessage = async (formData) => {
     } catch (error) {
         console.log("Failed to add Message");
     }
-
-    // module.exports = { sendMessageToChannels };
 }

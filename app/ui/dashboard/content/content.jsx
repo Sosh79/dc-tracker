@@ -3,7 +3,7 @@ const Content = () => {
     return (
         <div>
             <div className={styles.container}>
-                Content
+
             </div>
         </div>
     )

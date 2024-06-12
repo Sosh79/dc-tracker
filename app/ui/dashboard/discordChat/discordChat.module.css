@@ -5,28 +5,57 @@
     margin-top: 20px;
 }
 
-.form {
+.top {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    align-items: center;
+    justify-content: space-between;
 }
 
-.form input {
-    padding: 20px;
-    background-color: var(--bg);
-    color: var(--text);
-    border: 2px solid #2e374a;
-    border-radius: 5px;
-    margin-bottom: 30px;
-    width: 100%;
-}
-
-.form button {
-    width: 30%;
-    padding: 30px;
-    background-color: rgb(21, 85, 85);
+.addButton {
+    padding: 10px;
+    background-color: rgb(52, 58, 65);
     color: var(--text);
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.table {
+    width: 100%;
+}
+
+.table td {
+    padding: 10px;
+}
+
+.admin {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.avatar {
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    color: var(--text);
+    border: none;
+    cursor: pointer;
+}
+
+.editButton {
+    background-color: teal;
+}
+
+.deleteButton {
+    background-color: crimson;
 }

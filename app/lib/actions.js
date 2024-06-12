@@ -1,5 +1,5 @@
 "use server"
-import { Admin, Words } from "./models";
+import { Admin, Words, Server } from "./models";
 import { dbConnect } from "./dbConnect";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -173,5 +173,42 @@ export const deleteWord = async (formData) => {
         throw new Error("Failed to delete Word");
     }
     revalidatePath("/dashboard/createWord");
+}
+export const addServer = async (formData) => {
+    const { name, guildId, channelId } = Object.fromEntries(formData);
+    try {
+        await dbConnect();
 
+        // Check if the word already exists
+        const existingServer = await Server.findOne({ guildId });
+        if (existingServer) {
+            return { message: "This Server already exists in the database" };
+        }
+
+        // Add the new word
+        const newServer = new Server({
+            name,
+            guildId,
+            channelId,
+        });
+        await newServer.save();
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to add Server");
+    }
+    revalidatePath("/dashboard/discordChat");
+    redirect("/dashboard/discordChat")
+}
+
+
+export const deleteServer = async (formData) => {
+    const { id } = Object.fromEntries(formData)
+    try {
+        await dbConnect()
+        await Server.findByIdAndDelete(id);
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to delete Server");
+    }
+    revalidatePath("/dashboard/discordChat");
 }

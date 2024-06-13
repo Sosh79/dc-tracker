@@ -49,3 +49,13 @@
     cursor: pointer;
     margin-top: 20px;
 }
+
+.error {
+    text-align: center;
+    padding: 15px 10px;
+    color: #ffffff;
+    background-color: #dc3545;
+    /* Red background */
+    border-radius: 10px;
+    margin: 15px 0;
+}

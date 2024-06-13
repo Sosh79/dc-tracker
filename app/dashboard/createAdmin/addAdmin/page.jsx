@@ -12,16 +12,13 @@ const AddAdmin = () => {
         const username = formData.get("username");
         const email = formData.get("email");
 
-        // Check if both username and email are available
         const checkResult = await checkUsernameAndEmail(username, email);
         if (checkResult && checkResult.message === "Both username and email are available") {
-            // Username and email are available, proceed with adding the admin
             const response = await addAdmin(formData);
             if (response && response.message) {
                 setMessage(response.message);
             }
         } else if (checkResult && checkResult.message) {
-            // Either username or email is already taken
             setMessage(checkResult.message);
         }
     };

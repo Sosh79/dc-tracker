@@ -1,20 +1,62 @@
+"use client";
 import styles from "@/app/ui/dashboard/discordChat/singleChat/singleChat.module.css";
 import { addMessage } from "@/app/lib/discordBot";
-import { dcChat } from '@/app/lib/data';
+import { useEffect, useState } from "react";
+const dotEnv = require("dotenv");
+dotEnv.config();
 
-const SingleChat = async ({ params }) => {
+const SingleChat = ({ params }) => {
     const { id } = params;
-    const chatId = await dcChat(id);
+    const [chatId, setChatId] = useState();
+    const [message, setMessage] = useState("");
+
+    const getServerValue = async () => {
+        let response;
+        try {
+            response = await fetch(`${window.location.origin}/api/chat/get`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id }),
+            });
+            response = await response.json();
+        } catch (err) {
+            console.log(err);
+        }
+        if (response?.result) {
+            setChatId(response?.result);
+        }
+    };
+
+    useEffect(() => {
+        getServerValue();
+    }, []);
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+        const response = await addMessage(formData);
+        if (response && response.message) {
+            setMessage(response.message); // Display the message from the server response
+        }
+    };
+
+    if (!chatId) {
+        return <div>Loading...</div>;
+    }
 
     return (
         <div className={styles.container}>
-            <form action={addMessage} className={styles.form} method="POST">
-                <input type="hidden" name="id" value={chatId.id} />
-                <input type="text" placeholder={chatId.guildId || "ServerId..."} name="guildId" defaultValue={chatId.guildId} required />
-                <input type="text" placeholder={chatId.channelId || "ChannelId..."} name="channelId" defaultValue={chatId.channelId} required />
+            <form onSubmit={handleSubmit} className={styles.form}>
+                <input type="hidden" name="id" value={chatId?._id} />
+                <input type="text" placeholder={chatId?.guildId || "ServerId..."} name="guildId" defaultValue={chatId?.guildId} required />
+                <input type="text" placeholder={chatId?.channelId || "ChannelId..."} name="channelId" defaultValue={chatId?.channelId} required />
                 <input type="text" placeholder="Message..." name="message" required />
                 <button type="submit">Submit</button>
             </form>
+            {message && <p className={styles.error}>{message}</p>}
         </div>
     );
 };

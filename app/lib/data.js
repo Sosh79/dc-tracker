@@ -14,16 +14,6 @@ export const fetchAdmins = async (q, page) => {
         throw new Error("Failed to fetch admin");
     }
 }
-export const fetchEditAdmin = async (id) => {
-    try {
-        await dbConnect()
-        const admin = await Admin.findById(id);
-        return admin
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to fetch Edit Admin");
-    }
-}
 export const fetchGames = async (q, page) => {
     const regex = new RegExp(q, "i");
     const ITEM_PER_PAGE = 5;
@@ -73,16 +63,6 @@ export const fetchWord = async (q, page) => {
         throw new Error("Failed to fetch Word");
     }
 }
-export const fetchEditWord = async (id) => {
-    try {
-        await dbConnect()
-        const word = await Words.findById(id);
-        return word
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to fetch Edit Word");
-    }
-}
 export const fetchServer = async (q, page) => {
     const regex = new RegExp(q, "i");
     const ITEM_PER_PAGE = 5;
@@ -94,15 +74,5 @@ export const fetchServer = async (q, page) => {
     } catch (error) {
         console.log(error);
         throw new Error("Failed to fetch Server");
-    }
-}
-export const dcChat = async (id) => {
-    try {
-        await dbConnect()
-        const chatId = await Server.findById(id);
-        return chatId
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to fetch serverId");
     }
 }

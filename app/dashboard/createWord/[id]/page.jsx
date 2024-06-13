@@ -1,20 +1,64 @@
+"use client"
 import styles from '@/app/ui/dashboard/createWord/singleWord/singleWord.module.css'
-import { fetchEditWord } from '@/app/lib/data'
 import { editWord } from '@/app/lib/actions'
+import { useState, useEffect } from 'react';
+const dotEnv = require("dotenv");
+dotEnv.config();
 
 
-const SingleAdmin = async ({ params }) => {
+const SingleAdmin = ({ params }) => {
     const { id } = params
-    const word = await fetchEditWord(id)
+    const [word, setWord] = useState();
+    const [message, setMessage] = useState("");
+    const fetchEditWord = async () => {
+        let response;
+        try {
+            response = await fetch(`${window.location.origin}/api/fetchEditWord`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id }),
+            });
+            response = await response.json();
+        } catch (err) {
+            console.log(err);
+        }
+        if (response?.result) {
+            setWord(response?.result);
+        }
+    };
+    useEffect(() => {
+        fetchEditWord();
+    }, []);
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.target);
+
+        const response = await editWord(formData);
+
+        if (response && response.message) {
+            setMessage(response.message);
+        }
+    };
+
+
+
+
+    if (!word) {
+        return <div>Loading...</div>;
+    }
     return (
         <div className={styles.container}>
             <div className={styles.formContainer}>
-                <form action={editWord} className={styles.form} >
-                    <input type="hidden" name="id" value={word.id} />
+                <form onSubmit={handleSubmit} className={styles.form}>
+                    <input type="hidden" name="id" value={word?._id} />
                     <label> Username</label>
-                    <input type="text" placeholder={word.name} name="name" />
+                    <input type="text" placeholder={word?.name} name="name" />
                     <button>Update</button>
                 </form>
+                {message && <p className={styles.error}>{message}</p>}
             </div>
         </div>
     )

@@ -120,8 +120,6 @@ export const fetchUserSearch = async (formData) => {
     }
 };
 
-
-
 export const addWord = async (formData) => {
     const { name } = Object.fromEntries(formData);
     try {
@@ -147,6 +145,10 @@ export const editWord = async (formData) => {
     const { id, name } = Object.fromEntries(formData)
     try {
         await dbConnect()
+        const existingWord = await Words.findOne({ name });
+        if (existingWord) {
+            return { message: "This name already exists in the database" };
+        }
         const updatedWord = {
             name,
         }
@@ -157,6 +159,7 @@ export const editWord = async (formData) => {
 
     } catch (error) {
         console.log(error);
+        console.log("tesssssst");
         throw new Error("Failed to Edit Word");
     }
     revalidatePath("/dashboard/createWord");

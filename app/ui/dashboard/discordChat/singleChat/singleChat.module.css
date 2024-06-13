@@ -30,3 +30,13 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+.error {
+    text-align: center;
+    padding: 15px 10px;
+    color: #ffffff;
+    background-color: #a81e2c;
+    /* Red background */
+    border-radius: 10px;
+    margin: 15px 0;
+}

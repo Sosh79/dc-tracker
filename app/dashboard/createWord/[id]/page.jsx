@@ -2,11 +2,9 @@
 import styles from '@/app/ui/dashboard/createWord/singleWord/singleWord.module.css'
 import { editWord } from '@/app/lib/actions'
 import { useState, useEffect } from 'react';
-const dotEnv = require("dotenv");
-dotEnv.config();
 
 
-const SingleAdmin = ({ params }) => {
+const SingleWord = ({ params }) => {
     const { id } = params
     const [word, setWord] = useState();
     const [message, setMessage] = useState("");
@@ -64,4 +62,4 @@ const SingleAdmin = ({ params }) => {
     )
 }
 
-export default SingleAdmin;
+export default SingleWord;

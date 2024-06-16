@@ -11,7 +11,7 @@ const UsersPage = async ({ searchParams }) => {
     return (
         <div className={styles.container}>
             <div className={styles.top}>
-                <SearchBar placeholder="Sarch for admin..." />
+                <SearchBar placeholder="Sarch for user..." />
 
             </div>
             <table className={styles.table}>

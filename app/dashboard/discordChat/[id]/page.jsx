@@ -2,8 +2,6 @@
 import styles from "@/app/ui/dashboard/discordChat/singleChat/singleChat.module.css";
 import { addMessage } from "@/app/lib/discordBot";
 import { useEffect, useState } from "react";
-const dotEnv = require("dotenv");
-dotEnv.config();
 
 const SingleChat = ({ params }) => {
     const { id } = params;
@@ -39,7 +37,7 @@ const SingleChat = ({ params }) => {
         const formData = new FormData(event.target);
         const response = await addMessage(formData);
         if (response && response.message) {
-            setMessage(response.message); // Display the message from the server response
+            setMessage(response.message);
         }
     };
 

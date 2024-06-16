@@ -28,28 +28,16 @@ export const addMessage = async (formData) => {
             console.log(`✅ ${client.user.tag} is online`);
             const guild = client.guilds.cache.get(guildId);
             if (!guild) {
-                console.error("Guild not found");
-                x = true
-                console.log(x, "1");
-                return
-                // return { message: " Guild not found " };
+                return { message: " Guild not found " };
             }
             const specificChannel = guild.channels.cache.get(channelId);
             if (!specificChannel) {
-                console.error("Channel not found");
-                x = true
-                console.log(x, "2");
-                return
-
-                // return { message: "Channel not found" };
+                return { message: "Channel not found" };
             }
             if (specificChannel && specificChannel.isTextBased()) {
                 try {
                     await specificChannel.send(message)
-                    x = false
-                    if (x === false) {
-                        return { message: "Message sent successfully" };
-                    }
+                    return { message: "Message sent successfully" };
 
                 } catch (error) {
                     console.error(`Could not send message to ${specificChannel.name}:`, error);
@@ -59,13 +47,6 @@ export const addMessage = async (formData) => {
         });
 
         await client.login(process.env.TOKEN_GHAT);
-        console.log(x, "4");
-        if (x === true) {
-            return { message: "Channel not found" };
-        }
-        else if (x === false) {
-            return { message: "Message sent successfully" };
-        }
 
     } catch (error) {
         console.error("Failed to add Message:", error);

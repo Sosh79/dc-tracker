@@ -4,7 +4,7 @@ import styles from '@/app/ui/dashboard/search/search.module.css';
 import { fetchUserSearch } from '@/app/lib/actions';
 
 const Search = () => {
-    const [formData, setFormData] = useState({ username: '', gamesname: '' });
+    const [formData, setFormData] = useState({ username: '', gamename: '' });
     const [games, setGames] = useState([]);
     const [error, setError] = useState(null);
 
@@ -41,7 +41,7 @@ const Search = () => {
             <form onSubmit={handleSubmit} className={styles.form}>
                 <input type="text" placeholder="username" name="username" value={formData.username} onChange={handleChange} required
                 />
-                <input type="text" placeholder="gamesname" name="gamesname" value={formData.gamesname} onChange={handleChange} required
+                <input type="text" placeholder="gamename" name="gamename" value={formData.gamename} onChange={handleChange} required
                 />
                 <button type="submit">Submit</button>
             </form>
@@ -77,7 +77,6 @@ const Search = () => {
                 <tbody>
                     {games.map((game) => (
                         <tr key={game.id}>
-                            {/* <div className={styles.positiveFix}> */}
                             <td >
                                 <ol className={styles.positiveContainer}>
                                     {game.PositiveMessage.map((message, index) => {
@@ -90,7 +89,6 @@ const Search = () => {
                                     })}
                                 </ol>
                             </td>
-                            {/* </div> */}
                             <div className={styles.negativeFix}>
                                 <td >
                                     <ol className={styles.negativeContainer}>

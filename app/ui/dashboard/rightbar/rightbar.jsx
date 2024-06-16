@@ -8,23 +8,6 @@ const Rightbar = () => {
         <div className={styles.container}>
             <div className={styles.item}>
                 <div className={styles.bgContainer}>
-                    <Image className={styles.bg} src="/YouTube.svg" alt="" fill />
-                </div>
-                <div className={styles.text}>
-                    <span className={styles.notification}>✨ Coming soon</span>
-                    <h3 className={styles.title}>How to use discord-bot analyzer?</h3>
-                    <span className={styles.subtitle}>YouTube</span>
-                    <p className={styles.desc}>Learn how to operate and use this bot.</p>
-                    <a target="_blank" href="">
-                        <button className={styles.button}>
-                            <FaRegCirclePlay />
-                            Watch
-                        </button>
-                    </a>
-                </div>
-            </div>
-            <div className={styles.item}>
-                <div className={styles.bgContainer}>
                     <Image className={styles.bg} src="/GitHub.svg" alt="" fill />
                 </div>
                 <div className={styles.text}>

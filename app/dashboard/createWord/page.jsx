@@ -7,14 +7,14 @@ import { fetchWord } from "@/app/lib/data";
 import { deleteWord } from "@/app/lib/actions";
 
 
-const CreateAdminPage = async ({ searchParams }) => {
+const CreateWordPage = async ({ searchParams }) => {
     const q = searchParams?.q || "";
     const page = searchParams?.page || 1;
     const { words, count } = await fetchWord(q, page)
     return (
         <div className={styles.container}>
             <div className={styles.top}>
-                <SearchBar placeholder="Sarch for admin..." />
+                <SearchBar placeholder="Sarch for word..." />
                 <Link href="/dashboard/createWord/addWord">
                     <button className={styles.addButton}>Add New</button>
                 </Link>
@@ -29,7 +29,7 @@ const CreateAdminPage = async ({ searchParams }) => {
                 <tbody>
                     {words.map((word) => (
                         <tr key={word.id}>
-                            <td><div className={styles.admin}>
+                            <td><div className={styles.word}>
                                 <Image src={word.img || "/games.jpg"} alt="avatar"
                                     width={40}
                                     height={40}
@@ -61,4 +61,4 @@ const CreateAdminPage = async ({ searchParams }) => {
     )
 }
 
-export default CreateAdminPage;
+export default CreateWordPage;

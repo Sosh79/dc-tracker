@@ -2,8 +2,6 @@
 import styles from '@/app/ui/dashboard/createAdmin/singleAdmin/singleAdmin.module.css'
 import { editAdmin, checkUsernameAndEmail } from '@/app/lib/actions'
 import { useEffect, useState } from 'react'
-const dotEnv = require("dotenv");
-dotEnv.config();
 
 const SingleAdmin = ({ params }) => {
     const { id } = params

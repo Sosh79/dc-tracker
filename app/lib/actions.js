@@ -98,12 +98,12 @@ export const authenticate = async (prevState, formData) => {
 };
 export const fetchUserSearch = async (formData) => {
 
-    const { username, gamesname } = formData || {};
-    const regex = new RegExp(gamesname, "i");
+    const { username, gamename } = formData || {};
+    const regex = new RegExp(gamename, "i");
     try {
         await dbConnect();
         const user = await User.findOne({ username: username });
-        const game = user.games.find(game => game.name === gamesname || game.name.match(regex));
+        const game = user.games.find(game => game.name === gamename || game.name.match(regex));
         const results = [
             {
                 name: game.name,
@@ -159,7 +159,6 @@ export const editWord = async (formData) => {
 
     } catch (error) {
         console.log(error);
-        console.log("tesssssst");
         throw new Error("Failed to Edit Word");
     }
     revalidatePath("/dashboard/createWord");

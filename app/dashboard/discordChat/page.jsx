@@ -30,7 +30,7 @@ const DiscordChat = async ({ searchParams }) => {
                 <tbody>
                     {servers.map((server) => (
                         <tr key={server.id}>
-                            <td><div className={styles.admin}>
+                            <td><div className={styles.server}>
                                 {server.name}
                             </div>
                             </td>

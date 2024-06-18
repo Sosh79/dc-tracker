@@ -4,7 +4,6 @@ const { GoogleGenerativeAI } = require("@google/generative-ai");
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 // //------------------------------ SCHEMAS ----------------------------------
 const { Games, User } = require('../schemas')
-//------------------------------ FUNCTIONS ----------------------------------
 
 //--------------- Find And Update Word ---------------
 const findAndUpdateWord = async (name, value) => {
@@ -54,7 +53,6 @@ async function run(message) {
 const AnalyzeMessageWord = async (message, name) => {
     const text = await run(message);
     const textResult = text.trim()
-    // console.log(textResult);
     let updateValue = null;
 
     if (textResult === "positive") {

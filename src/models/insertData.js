@@ -1,7 +1,4 @@
 const { Games, User } = require('../schemas')
-
-
-// --------------------------------- Insert All Data --------------------------------------------
 //---------- USERS INSERT --------------
 
 const insertDocUser = async (message, wordsToAudit) => {

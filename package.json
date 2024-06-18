@@ -5,8 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "nodemonI": "nodemon src/index.js",
-    "nodemonS": "nodemon src/server.js"
+    "nodemonI": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -16,9 +15,7 @@
     "cors": "^2.8.5",
     "discord.js": "^14.15.2",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "mongoose": "^8.3.4",
-    "natural": "^7.0.5"
+    "mongoose": "^8.3.4"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

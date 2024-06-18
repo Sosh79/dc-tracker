@@ -1,6 +1,4 @@
-//------------------------------ SCHEMAS ----------------------------------
 const { Games, User } = require('../schemas')
-
 // ------------ MODELS ----------------------
 const Analyze = require('./AnalyzeMessage')
 const Insert = require('./insertData')

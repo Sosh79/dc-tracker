@@ -46,7 +46,7 @@ export const addMessage = async (formData) => {
             }
         });
 
-        await client.login(process.env.TOKEN_GHAT);
+        await client.login(process.env.TOKEN_CHAT);
 
     } catch (error) {
         console.error("Failed to add Message:", error);

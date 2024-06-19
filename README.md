@@ -6,7 +6,7 @@ It is a discord bot that can track the words specified by the administrator
 ## Features
 
 - You can find out how many times the word was mentioned on the server
-- All users who talked about a word?
+- All users talked about a word
 - Search for a specific word mentioned by the user, how many times the user mentioned the positive and negative word
 - Sending a message to the server as a bot
 

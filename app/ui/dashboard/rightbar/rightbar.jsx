@@ -15,7 +15,7 @@ const Rightbar = () => {
                     <h3 className={styles.title}>Get the updated code</h3>
                     <span className={styles.subtitle}>Github</span>
                     <p className={styles.desc}>Check if there is a new update for bot.</p>
-                    <a target="_blank" href="https://github.com/Sosh79/discord-bot">
+                    <a target="_blank" href="https://github.com/Sosh79/dc-tracker">
                         <button className={styles.button}>
                             <RiGitRepositoryFill />
                             Learn

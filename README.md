@@ -18,6 +18,8 @@ It is a discord bot that can track the words specified by the administrator
 ## Admin Account
 #### You need this to log in
 - [Admin Documents ](https://pastebin.com/0ydhnbbw)
+- ##### Username = admin
+- ##### Password = 1234
 
 ## Environment Variables
 

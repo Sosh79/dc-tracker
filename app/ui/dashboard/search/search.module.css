@@ -40,6 +40,13 @@
     padding: 10px;
 }
 
+.PN {
+    display: flex;
+    justify-content: space-around;
+}
+
+
+
 
 .positiveContainer,
 .negativeContainer {
@@ -61,4 +68,14 @@
     /* Red background */
     border-radius: 10px;
     margin: 15px 0;
+}
+
+.x {
+    color: #ffffff;
+    background-color: #4b42438f;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border-radius: 10px;
+
 }

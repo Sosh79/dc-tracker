@@ -77,19 +77,19 @@ const Search = () => {
                 <tbody>
                     {games.map((game) => (
                         <tr key={game.id}>
-                            <td >
-                                <ol className={styles.positiveContainer}>
-                                    {game.PositiveMessage.map((message, index) => {
-                                        return (
-                                            <li key={index}>
-                                                {renderMessages(message)}
-                                            </li>
+                            <div >
+                                <td >
+                                    <ol className={styles.positiveContainer}>
+                                        {game.PositiveMessage.map((message, index) => {
+                                            return (
+                                                <li key={index}>
+                                                    {renderMessages(message)}
+                                                </li>
 
-                                        );
-                                    })}
-                                </ol>
-                            </td>
-                            <div className={styles.negativeFix}>
+                                            );
+                                        })}
+                                    </ol>
+                                </td>
                                 <td >
                                     <ol className={styles.negativeContainer}>
                                         {game.NegativeMessage.map((message, index) => {

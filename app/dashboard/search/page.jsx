@@ -69,7 +69,7 @@ const Search = () => {
             </table>
             <table className={styles.table}>
                 <thead >
-                    <tr className={styles.PN}>
+                    <tr className={styles.PN_Position}>
                         <td>PositiveMessage</td>
                         <td>NegativeMessage</td>
                     </tr>
@@ -77,7 +77,7 @@ const Search = () => {
                 <tbody>
                     {games.map((game) => (
                         <tr key={game.id}>
-                            <div className={styles.x}>
+                            <div className={styles.PN_Container}>
                                 <td >
                                     <ol className={styles.positiveContainer}>
                                         {game.PositiveMessage.map((message, index) => {

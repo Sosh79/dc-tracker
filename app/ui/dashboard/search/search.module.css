@@ -40,7 +40,7 @@
     padding: 10px;
 }
 
-.PN {
+.PN_Position {
     display: flex;
     justify-content: space-around;
 }
@@ -70,7 +70,7 @@
     margin: 15px 0;
 }
 
-.x {
+.PN_Container {
     color: #ffffff;
     background-color: #4b42438f;
     display: flex;
